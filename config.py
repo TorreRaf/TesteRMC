@@ -3,10 +3,10 @@ from urllib.parse import quote_plus
 
 DRIVER = quote_plus("ODBC Driver 17 for SQL Server")
 
-USER = "usr_gr"
-PASSWORD = quote_plus("energy1899")
+USER = "usr_TOP"
+PASSWORD = quote_plus("Imagine_My_Password")
 SERVER = "srv-db-01"
-DATABASE = "INTRANET_WOORI"
+DATABASE = "MYBEAUTIFULDB"
 
 class Config:
     SQLALCHEMY_DATABASE_URI = (
