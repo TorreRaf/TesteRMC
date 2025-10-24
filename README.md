@@ -12,7 +12,7 @@ It streamlines the process of managing outgoing equipment, ensuring accurate doc
 ---
 
 ## ⚙️ Technologies
-The technologies used in this project are **confidential** for now.
+The technologies used in this project are **Surprise** for now.
 
 ---
 
