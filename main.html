@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guia de Remessa</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h2>GUIA DE REMESSA PARA MANUTENÇÃO/CONSERTO</h2>
+            <div class="form-group">
+                <p class="company-name">BANCO WOORI BANK DO BRASIL S/A</p>
+            </div>
+            <div class="header">
+                <p class="company-cnpj">CNPJ: 15.357.060.0001-33</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">DADOS DA REMESSA</div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="numero-guia">Número da Guia:</label>
+                    <input type="text" id="numero-guia" placeholder="GR-ANO-SEQ" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="data-emissao">Data de Emissão:</label>
+                    <input type="text" id="data-emissao" readonly class="date-display">
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">INFORMAÇÕES DO FORNECEDOR/PRESTADOR DE SERVIÇOS</div>
+            <div class="form-group">
+                <label for="fornecedor-select">Razão Social:</label>
+                <div class="select-with-button">
+                    <select id="fornecedor-select">
+                        <option value="">Selecione um fornecedor</option>
+                    </select>
+                    <button type="button" class="btn-new-supplier" onclick="abrirCadastroFornecedor()">Novo Fornecedor</button>
+                    <button type="button" class="btn-edit-supplier" onclick="editarFornecedorSelecionado()">Editar Fornecedor</button>
+                </div>
+                <div id="fornecedor-info" class="fornecedor-info" style="display: none;">
+                    <p><strong>CNPJ:</strong> <span id="info-cnpj"></span></p>
+                    <p><strong>Contato:</strong> <span id="info-contato"></span></p>
+                    <p><strong>E-mail:</strong> <span id="info-email"></span></p>
+                    <p><strong>Endereço:</strong> <span id="info-endereco"></span></p>
+                    <p><strong>Responsável:</strong> <span id="info-responsavel"></span></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">ATIVOS REMETIDOS</div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th width="10%">Qtd.</th>
+                        <th width="35%">Descrição do Equipamento/Ativo</th>
+                        <th width="15%">Nº de Série</th>
+                        <th width="15%">Patrimônio</th>
+                        <th width="15%">Valor Contábil</th>
+                        <th width="10%">Ações</th>
+                    </tr>
+                </thead>
+                <tbody id="equipamentos-body">
+                    <tr>
+                        <td><input type="number" class="quantidade" placeholder="Ex: 1" min="1" value="1"></td>
+                        <td><input type="text" class="descricao" placeholder="Descrição Detalhada do Equipamento" required></td>
+                        <td><input type="text" class="numero-serie" placeholder="Número de Série"></td>
+                        <td><input type="text" class="patrimonio" placeholder="Nº Patrimônio"></td>
+                        <td><input type="text" class="valor" placeholder="R$ 0,00"></td>
+                        <td><button type="button" class="btn-remove no-print" onclick="removerEquipamento(this)">✕</button></td>
+                    </tr>
+                </tbody>
+            </table>
+            <button type="button" class="btn-add no-print" onclick="adicionarEquipamento()">+ Adicionar Equipamento</button>
+        </div>
+
+        <div class="section">
+            <div class="section-title">MOTIVO DA REMESSA</div>
+            <div class="checkbox-group">
+                <div class="checkbox-item">
+                    <input type="checkbox" id="manutencao-preventiva" value="Manutenção Preventiva">
+                    <label for="manutencao-preventiva">Manutenção Preventiva</label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="conserto-reparo" value="Conserto/Reparo">
+                    <label for="conserto-reparo">Conserto/Reparo</label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="calibracao" value="Calibração">
+                    <label for="calibracao">Calibração</label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="outros">
+                    <label for="outros">Outros:</label>
+                    <input type="text" id="outros-detalhe" placeholder="Especifique" class="other-detail">
+                </div>
+            </div>
+            <br>
+            <div class="form-group">
+                <label for="defeito">Defeito/Problema Relatado:</label>
+                <textarea id="defeito" placeholder="Descreva o defeito ou problema observado"></textarea>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">Histórico de Guias</div>
+            <div class="table-container">
+                <table class="table" id="tabela-historico">
+                    <thead>
+                        <tr>
+                            <th>Número</th>
+                            <th>Data</th>
+                            <th>Fornecedor</th>
+                            <th>Motivo</th>
+                            <th>Equipamentos</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="historico-body"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="buttons no-print">
+            <button type="button" class="btn-primary" onclick="salvarGuia()">Salvar Guia</button>
+            <button type="button" class="btn-print" onclick="imprimirGuia()">Imprimir Guia</button>
+            <button type="button" class="btn-clear" onclick="limparFormulario()">Limpar Formulário</button>
+        </div>
+    </div>
+
+    <!-- Modal Fornecedor -->
+    <div id="modal-fornecedor" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="fecharModalFornecedor()">&times;</span>
+            <h3 id="modal-fornecedor-titulo">Novo Fornecedor</h3>
+            <div class="form-group">
+                <label>Razão Social: *</label>
+                <input type="text" id="novo-nome" required>
+            </div>
+            <div class="form-group">
+                <label>CNPJ: *</label>
+                <input type="text" id="novo-cnpj" placeholder="00.000.000/0000-00" required>
+            </div>
+            <div class="form-group">
+                <label>Contato:</label>
+                <input type="text" id="novo-contato">
+            </div>
+            <div class="form-group">
+                <label>E-mail:</label>
+                <input type="email" id="novo-email" placeholder="email@exemplo.com">
+            </div>
+            <div class="form-group">
+                <label>Endereço:</label>
+                <input type="text" id="novo-endereco">
+            </div>
+            <div class="form-group">
+                <label>Responsável:</label>
+                <input type="text" id="novo-responsavel">
+            </div>
+            <div class="modal-buttons">
+                <button class="btn-primary" onclick="salvarFornecedor()">Salvar</button>
+                <button id="btn-excluir-fornecedor" class="btn-secondary btn-danger" style="display: none;" onclick="excluirFornecedor()">Excluir</button>
+                <button class="btn-secondary" onclick="fecharModalFornecedor()">Cancelar</button>
+            </div>
+            <div id="fornecedor-message" class="message"></div>
+        </div>
+    </div>
+
+    <!-- Modal Confirmação -->
+    <div id="modal-confirmacao" class="modal">
+        <div class="modal-content">
+            <h3 id="confirmacao-titulo">Confirmação</h3>
+            <p id="confirmacao-mensagem"></p>
+            <div class="modal-buttons">
+                <button class="btn-primary" id="confirmacao-confirmar">Confirmar</button>
+                <button class="btn-secondary" onclick="fecharModalConfirmacao()">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
